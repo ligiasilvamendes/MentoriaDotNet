@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AppTest.Api.Extensions;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -83,22 +84,23 @@ namespace AppTest.Api.Configuration
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            //endpoints.MapHealthChecks("/api/hc", new HealthCheckOptions()
-            //{
-            //    Predicate = _ => true,
-            //    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-            //});
-            //endpoints.MapHealthChecksUI(options =>
-            //{
-            //    options.UIPath = "/api/hc-ui";
-            //    options.ResourcesPath = "/api/hc-ui-resources";
+                //endpoints.MapHealthChecks("/api/hc", new HealthCheckOptions()
+                //{
+                //    Predicate = _ => true,
+                //    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                //});
+                //endpoints.MapHealthChecksUI(options =>
+                //{
+                //    options.UIPath = "/api/hc-ui";
+                //    options.ResourcesPath = "/api/hc-ui-resources";
 
-            //    options.UseRelativeApiPath = false;
-            //    options.UseRelativeResourcesPath = false;
-            //    options.UseRelativeWebhookPath = false;
-            //});
+                //    options.UseRelativeApiPath = false;
+                //    options.UseRelativeResourcesPath = false;
+                //    options.UseRelativeWebhookPath = false;
+                //});
 
-        });
+                app.UseMiddleware(typeof(ErrorHandlingMiddleware));
+            });
 
             return app;
         }
